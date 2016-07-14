@@ -1,4 +1,4 @@
-FROM starlabio/ubuntu-base:1.0
+FROM starlabio/ubuntu-base:1.1
 MAINTAINER Doug Goldstein <doug@starlab.io>
 
 # setup linkers for Cargo
