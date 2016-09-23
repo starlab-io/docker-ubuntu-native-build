@@ -36,7 +36,8 @@ RUN apt-get update && \
         libnl-cli-3-dev libbz2-dev libpci-dev m4 cmake \
         gettext bin86 bcc acpica-tools uuid-dev ncurses-dev \
         libaio-dev libyajl-dev libkeyutils-dev bc u-boot-tools libncurses-dev \
-        linux-headers-generic clang-3.7 clang-format-3.7 cppcheck libtspi-dev lcov \
+        linux-headers-generic clang-3.7 clang-format-3.7 cppcheck libtspi-dev \
+        lcov liblzma-dev gnu-efi \
         gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
         libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
         libkeyutils1:armhf libkeyutils-dev:armhf && \
