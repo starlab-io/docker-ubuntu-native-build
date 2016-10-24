@@ -17,9 +17,13 @@ RUN /root/.cargo/bin/rustup default 1.12.1-x86_64-unknown-linux-gnu
 RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
 RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
+# Install Rust nightly
+RUN /root/.cargo/bin/rustup toolchain install nightly-2016-10-18-x86_64-unknown-linux-gnu
 
 # Install rustfmt / cargo fmt for testing
 RUN cargo install --root /usr/local rustfmt --vers 0.5.0
+# Install clippy
+run /root/.cargo/bin/rustup run nightly-2016-10-18 -- cargo install --root /usr/local clippy --vers 0.0.95
 
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
