@@ -12,18 +12,26 @@ ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && sh ./rustup-install.sh  -y && rm rustup-install.sh
 
 # Install x86_64 Rust
-RUN /root/.cargo/bin/rustup default 1.12.1-x86_64-unknown-linux-gnu
+RUN /root/.cargo/bin/rustup default 1.15.1-x86_64-unknown-linux-gnu
 # Install AARCH64 Rust
 RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
 RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 # Install Rust nightly
-RUN /root/.cargo/bin/rustup toolchain install nightly-2016-10-18-x86_64-unknown-linux-gnu
+RUN /root/.cargo/bin/rustup toolchain install nightly-2017-03-04-x86_64-unknown-linux-gnu
 
 # Install rustfmt / cargo fmt for testing
-RUN cargo install --root /usr/local rustfmt --vers 0.5.0
+RUN cargo install --root /usr/local rustfmt --vers 0.8.0
+
+# Get libcurl.so.4 needed by latest cargo 
+RUN apt-get update && \
+    apt-get --quiet --yes install libcurl3 && \
+        apt-get autoremove -y && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
+
 # Install clippy
-run /root/.cargo/bin/rustup run nightly-2016-10-18 -- cargo install --root /usr/local clippy --vers 0.0.95
+run /root/.cargo/bin/rustup run nightly-2017-03-04 -- cargo install --root /usr/local clippy --vers 0.0.118
 
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
