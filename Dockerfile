@@ -44,6 +44,7 @@ RUN sed -e 's:deb h:deb [arch=amd64] h:' -e 's:deb-src h:deb-src [arch=amd64] h:
 # package depends
 RUN apt-get update && \
     apt-get --quiet --yes install \
+        checkpolicy \
         libnl-3-dev texinfo libnl-utils software-properties-common \
         libnl-cli-3-dev libbz2-dev libpci-dev m4 cmake \
         gettext bin86 bcc acpica-tools uuid-dev ncurses-dev \
