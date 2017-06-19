@@ -53,7 +53,7 @@ RUN apt-get update && \
         vim-common lcov liblzma-dev gnu-efi \
         gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
         libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
-        libkeyutils1:armhf libkeyutils-dev:armhf && \
+        libkeyutils1:armhf libkeyutils-dev:armhf libbsd-dev && \
         apt-get autoremove -y && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
