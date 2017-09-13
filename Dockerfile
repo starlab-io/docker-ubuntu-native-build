@@ -44,7 +44,7 @@ RUN sed -e 's:deb h:deb [arch=amd64] h:' -e 's:deb-src h:deb-src [arch=amd64] h:
 # package depends
 RUN apt-get update && \
     apt-get --quiet --yes install \
-        checkpolicy libtspi-dev \
+        checkpolicy autoconf-archive libtool \
         libnl-3-dev texinfo libnl-utils software-properties-common \
         libnl-cli-3-dev libbz2-dev libpci-dev m4 cmake \
         gettext bin86 bcc acpica-tools uuid-dev ncurses-dev \
@@ -60,3 +60,13 @@ RUN apt-get update && \
 
 # Install behave and hamcrest for testing
 RUN pip install behave pyhamcrest
+
+# We need to install TPM 2.0 tools
+RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
+    tar -zxf tpm2-tss-1.2.0.tar.gz && \
+    cd tpm2-tss-1.2.0 && \
+    ./configure && \
+    make && \
+    make install && \
+    cd .. && \
+    rm -rf tpm2-tss-1.2.0
