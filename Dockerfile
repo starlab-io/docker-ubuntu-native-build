@@ -18,12 +18,12 @@ RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
 RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 # Install Rust nightly
-RUN /root/.cargo/bin/rustup toolchain install nightly-2017-03-04-x86_64-unknown-linux-gnu
+RUN /root/.cargo/bin/rustup toolchain install nightly-2017-09-13-x86_64-unknown-linux-gnu
 
 # Install rustfmt / cargo fmt for testing
 RUN cargo install --root /usr/local rustfmt --vers 0.8.0
 
-# Get libcurl.so.4 needed by latest cargo 
+# Get libcurl.so.4 needed by latest cargo
 RUN apt-get update && \
     apt-get --quiet --yes install libcurl3 && \
         apt-get autoremove -y && \
@@ -31,7 +31,7 @@ RUN apt-get update && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
 # Install clippy
-run /root/.cargo/bin/rustup run nightly-2017-03-04 -- cargo install --root /usr/local clippy --vers 0.0.118
+run /root/.cargo/bin/rustup run nightly-2017-09-13 -- cargo install --root /usr/local clippy --vers 0.0.160
 
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
