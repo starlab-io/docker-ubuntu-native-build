@@ -9,10 +9,10 @@ RUN echo "[target.arm-unknown-linux-gnueabihf]\r\nlinker = \"arm-linux-gnueabihf
 ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # install rustup
-RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && sh ./rustup-install.sh  -y && rm rustup-install.sh
+RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
+    sh ./rustup-install.sh -y --default-toolchain 1.15.1-x86_64-unknown-linux-gnu && \
+    rm rustup-install.sh
 
-# Install x86_64 Rust
-RUN /root/.cargo/bin/rustup default 1.15.1-x86_64-unknown-linux-gnu
 # Install AARCH64 Rust
 RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
