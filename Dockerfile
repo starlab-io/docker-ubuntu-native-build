@@ -65,8 +65,9 @@ RUN pip install behave pyhamcrest
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
     tar -zxf tpm2-tss-1.2.0.tar.gz && \
     cd tpm2-tss-1.2.0 && \
-    ./configure && \
+    ./configure --prefix=/usr && \
     make && \
     make install && \
     cd .. && \
-    rm -rf tpm2-tss-1.2.0
+    rm -rf tpm2-tss-1.2.0 && \
+    ldconfig
