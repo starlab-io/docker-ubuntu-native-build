@@ -10,7 +10,7 @@ ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 
 # install rustup
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
-    sh ./rustup-install.sh -y --default-toolchain 1.15.1-x86_64-unknown-linux-gnu && \
+    sh ./rustup-install.sh -y --default-toolchain 1.20.0-x86_64-unknown-linux-gnu && \
     rm rustup-install.sh
 
 # Install AARCH64 Rust
@@ -21,7 +21,7 @@ RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 RUN /root/.cargo/bin/rustup toolchain install nightly-2017-09-13-x86_64-unknown-linux-gnu
 
 # Install rustfmt / cargo fmt for testing
-RUN cargo install --root /usr/local rustfmt --vers 0.8.0
+RUN cargo install --root /usr/local rustfmt --vers 0.8.6
 
 # Get libcurl.so.4 needed by latest cargo
 RUN apt-get update && \
