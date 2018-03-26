@@ -21,7 +21,7 @@ RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 RUN /root/.cargo/bin/rustup toolchain install nightly-2018-03-25-x86_64-unknown-linux-gnu
 
 # Install rustfmt / cargo fmt for testing
-RUN cargo install --root /usr/local rustfmt --vers 0.8.6
+RUN cargo install --force rustfmt --vers 0.8.6
 
 # Get libcurl.so.4 needed by latest cargo
 RUN apt-get update && \
