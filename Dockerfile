@@ -59,7 +59,7 @@ RUN apt-get update && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
 # Install behave and hamcrest for testing
-RUN pip install behave pyhamcrest
+RUN pip install behave pyhamcrest requests
 
 # We need to install TPM 2.0 tools
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
