@@ -30,9 +30,6 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
-# Install clippy
-run /root/.cargo/bin/rustup run nightly-2018-03-25 -- cargo install --root /usr/local clippy --vers 0.0.189
-
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
 
@@ -53,13 +50,14 @@ RUN apt-get update && \
         vim-common lcov liblzma-dev gnu-efi \
         gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
         libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
-        libkeyutils1:armhf libkeyutils-dev:armhf libbsd-dev && \
+        libkeyutils1:armhf libkeyutils-dev:armhf libbsd-dev \
+        rpm && \
         apt-get autoremove -y && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
 # Install behave and hamcrest for testing
-RUN pip install --upgrade pip && pip install behave pyhamcrest requests
+RUN pip install behave pyhamcrest requests
 
 # We need to install TPM 2.0 tools
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
