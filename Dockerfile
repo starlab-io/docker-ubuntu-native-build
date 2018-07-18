@@ -10,15 +10,13 @@ ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 
 # install rustup
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
-    sh ./rustup-install.sh -y --default-toolchain 1.24.1-x86_64-unknown-linux-gnu && \
+    sh ./rustup-install.sh -y --default-toolchain 1.26.2-x86_64-unknown-linux-gnu && \
     rm rustup-install.sh
 
 # Install AARCH64 Rust
 RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
 RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
-# Install Rust nightly
-RUN /root/.cargo/bin/rustup toolchain install nightly-2018-03-25-x86_64-unknown-linux-gnu
 
 # Install rustfmt / cargo fmt for testing
 RUN cargo install --force rustfmt --vers 0.8.6
