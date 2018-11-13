@@ -19,7 +19,7 @@ RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 
 # Install rustfmt / cargo fmt for testing
-RUN cargo install --force rustfmt --vers 0.8.6
+RUN rustup component add rustfmt-preview
 
 # Get libcurl.so.4 needed by latest cargo
 RUN apt-get update && \
