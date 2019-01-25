@@ -49,7 +49,7 @@ RUN apt-get update && \
         gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
         libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
         libkeyutils1:armhf libkeyutils-dev:armhf libbsd-dev \
-        rpm && \
+        rpm gawk dos2unix && \
         apt-get autoremove -y && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
