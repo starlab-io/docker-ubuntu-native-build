@@ -1,4 +1,4 @@
-FROM starlabio/ubuntu-base:1.4
+FROM starlabio/ubuntu-base:1.5
 MAINTAINER Doug Goldstein <doug@starlab.io>
 
 # setup linkers for Cargo
@@ -21,13 +21,6 @@ RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 # Install rustfmt / cargo fmt for testing
 RUN rustup component add rustfmt-preview
 
-# Get libcurl.so.4 needed by latest cargo
-RUN apt-get update && \
-    apt-get --quiet --yes install libcurl3 && \
-        apt-get autoremove -y && \
-        apt-get clean && \
-        rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
-
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
 
@@ -44,11 +37,12 @@ RUN apt-get update && \
         libnl-cli-3-dev libbz2-dev libpci-dev m4 cmake \
         gettext bin86 bcc acpica-tools uuid-dev ncurses-dev \
         libaio-dev libyajl-dev libkeyutils-dev bc u-boot-tools libncurses-dev \
-        linux-headers-generic clang-3.8 clang-format-3.8 cppcheck libtspi-dev \
+        linux-headers-generic clang-8 clang-format-8 cppcheck libtspi-dev \
         vim-common lcov liblzma-dev gnu-efi \
         gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
         libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
         libkeyutils1:armhf libkeyutils-dev:armhf libbsd-dev \
+        ruby-dev \
         rpm gawk dos2unix && \
         apt-get autoremove -y && \
         apt-get clean && \
@@ -67,3 +61,6 @@ RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-ts
     cd .. && \
     rm -rf tpm2-tss-1.2.0 && \
     ldconfig
+
+# Install ronn for building man pages
+RUN gem install ronn
