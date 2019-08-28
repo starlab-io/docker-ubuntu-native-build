@@ -1,4 +1,4 @@
-FROM starlabio/ubuntu-base:1.4
+FROM starlabio/ubuntu-base:1.5
 MAINTAINER Doug Goldstein <doug@starlab.io>
 
 # setup linkers for Cargo
@@ -10,7 +10,7 @@ ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sb
 
 # install rustup
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
-    sh ./rustup-install.sh -y --default-toolchain 1.26.2-x86_64-unknown-linux-gnu && \
+    sh ./rustup-install.sh -y --default-toolchain 1.37.0-x86_64-unknown-linux-gnu && \
     rm rustup-install.sh
 
 # Install AARCH64 Rust
@@ -19,14 +19,7 @@ RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
 RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
 
 # Install rustfmt / cargo fmt for testing
-RUN rustup component add rustfmt-preview
-
-# Get libcurl.so.4 needed by latest cargo
-RUN apt-get update && \
-    apt-get --quiet --yes install libcurl3 && \
-        apt-get autoremove -y && \
-        apt-get clean && \
-        rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
+RUN rustup component add rustfmt
 
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
@@ -44,7 +37,7 @@ RUN apt-get update && \
         libnl-cli-3-dev libbz2-dev libpci-dev m4 cmake \
         gettext bin86 bcc acpica-tools uuid-dev ncurses-dev \
         libaio-dev libyajl-dev libkeyutils-dev bc u-boot-tools libncurses-dev \
-        linux-headers-generic clang-3.8 clang-format-3.8 cppcheck libtspi-dev \
+        linux-headers-generic clang-8 clang-format-8 cppcheck libtspi-dev \
         vim-common lcov liblzma-dev gnu-efi \
         gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
         libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
