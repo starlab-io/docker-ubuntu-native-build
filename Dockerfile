@@ -30,20 +30,54 @@ RUN sed -e 's:deb h:deb [arch=amd64] h:' -e 's:deb-src h:deb-src [arch=amd64] h:
         sed -e 's:arch=amd64:arch=armhf,arm64:' -e 's:security:ports:' -e 's://.*archive://ports:' -e 's:/ubuntu::' /etc/apt/sources.list | grep 'ubuntu.com' | grep -v '\-ports' | tee /etc/apt/sources.list.d/arm.list
 
 # package depends
-RUN apt-get update && \
-    apt-get --quiet --yes install \
-        checkpolicy autoconf-archive libtool \
-        libnl-3-dev texinfo libnl-utils software-properties-common \
-        libnl-cli-3-dev libbz2-dev libpci-dev m4 cmake \
-        gettext bin86 bcc acpica-tools uuid-dev ncurses-dev \
-        libaio-dev libyajl-dev libkeyutils-dev bc u-boot-tools libncurses-dev \
-        linux-headers-generic clang-8 clang-format-8 cppcheck libtspi-dev \
-        vim-common lcov liblzma-dev gnu-efi \
-        gcc-arm-linux-gnueabihf gcc-aarch64-linux-gnu libssl-dev:armhf \
-        libssl-dev:arm64 libkeyutils1:arm64 libkeyutils-dev:arm64 \
-        libkeyutils1:armhf libkeyutils-dev:armhf libbsd-dev \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install \
+        acpica-tools \
+        autoconf-archive \
+        bc \
+        bcc \
+        bin86 \
+        checkpolicy \
+        clang \
+        clang-format \
+        cmake \
+        dos2unix \
+        gawk \
+        gcc-aarch64-linux-gnu \
+        gcc-arm-linux-gnueabihf \
+        gettext \
+        gnu-efi \
+        lcov \
+        libaio-dev \
+        libbsd-dev \
+        libbz2-dev \
         libcmocka-dev \
-        rpm gawk dos2unix && \
+        libkeyutils-dev \
+        libkeyutils-dev:arm64 \
+        libkeyutils-dev:armhf \
+        libkeyutils1:arm64 \
+        libkeyutils1:armhf \
+        liblzma-dev \
+        libncurses-dev \
+        libnl-3-dev \
+        libnl-cli-3-dev \
+        libnl-utils \
+        libpci-dev \
+        libssl-dev:arm64 \
+        libssl-dev:armhf \
+        libtool \
+        libtspi-dev \
+        libyajl-dev \
+        linux-headers-generic \
+        m4 \
+        ncurses-dev \
+        rpm \
+        software-properties-common \
+        texinfo \
+        u-boot-tools \
+        uuid-dev \
+        vim-common && \
         apt-get autoremove -y && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
@@ -61,3 +95,23 @@ RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-ts
     cd .. && \
     rm -rf tpm2-tss-1.2.0 && \
     ldconfig
+
+SHELL ["/bin/bash", "-c"]
+
+ARG SHELLCHECK_VER=v0.7.0
+RUN wget -nv https://storage.googleapis.com/shellcheck/shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
+    tar xf shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
+    install shellcheck-${SHELLCHECK_VER}/shellcheck /usr/local/bin && \
+    rm shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
+    rm -r shellcheck-${SHELLCHECK_VER}
+
+ARG CPPCHECK_VER=1.89
+RUN wget -nv https://github.com/danmar/cppcheck/archive/${CPPCHECK_VER}.tar.gz && \
+    tar xf ${CPPCHECK_VER}.tar.gz && \
+    pushd cppcheck-${CPPCHECK_VER} && \
+    cmake . && \
+    make -j $(nproc) && \
+    make install && \
+    popd && \
+    rm -r cppcheck-${CPPCHECK_VER} && \
+    rm ${CPPCHECK_VER}.tar.gz
