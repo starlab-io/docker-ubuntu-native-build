@@ -1,5 +1,5 @@
 FROM starlabio/ubuntu-base:1.5
-MAINTAINER Doug Goldstein <doug@starlab.io>
+MAINTAINER Pete Dietl <pete.dietl@starlab.io>
 
 # setup linkers for Cargo
 RUN mkdir -p /root/.cargo/
