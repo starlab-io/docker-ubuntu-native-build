@@ -72,6 +72,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         linux-headers-generic \
         m4 \
         ncurses-dev \
+        parallel \
         rpm \
         software-properties-common \
         texinfo \
