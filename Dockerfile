@@ -1,5 +1,5 @@
 FROM starlabio/ubuntu-base:1.5
-MAINTAINER Doug Goldstein <doug@starlab.io>
+MAINTAINER Pete Dietl <pete.dietl@starlab.io>
 
 # setup linkers for Cargo
 RUN mkdir -p /root/.cargo/
@@ -72,6 +72,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         linux-headers-generic \
         m4 \
         ncurses-dev \
+        parallel \
         rpm \
         software-properties-common \
         texinfo \
