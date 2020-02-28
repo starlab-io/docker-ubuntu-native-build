@@ -41,6 +41,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         checkpolicy \
         clang \
         clang-format \
+        clang-tools \
         cmake \
         dos2unix \
         gawk \
