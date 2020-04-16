@@ -1,4 +1,4 @@
-FROM starlabio/ubuntu-base:1.5
+FROM starlabio/ubuntu-base:1.6
 MAINTAINER Pete Dietl <pete.dietl@starlab.io>
 
 # setup linkers for Cargo
