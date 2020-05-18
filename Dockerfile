@@ -30,6 +30,7 @@ RUN sed -e 's:deb h:deb [arch=amd64] h:' -e 's:deb-src h:deb-src [arch=amd64] h:
         sed -e 's:arch=amd64:arch=armhf,arm64:' -e 's:security:ports:' -e 's://.*archive://ports:' -e 's:/ubuntu::' /etc/apt/sources.list | grep 'ubuntu.com' | grep -v '\-ports' | tee /etc/apt/sources.list.d/arm.list
 
 # package depends
+# Please keep this list alphabetized
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install \
@@ -43,6 +44,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         clang-format \
         clang-tools \
         cmake \
+        cpio \
         dos2unix \
         gawk \
         gcc-aarch64-linux-gnu \
