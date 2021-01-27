@@ -1,25 +1,31 @@
 FROM starlabio/ubuntu-base:1.7
 MAINTAINER Pete Dietl <pete.dietl@starlab.io>
 
-# setup linkers for Cargo
-RUN mkdir -p /root/.cargo/
-RUN echo "[target.aarch64-unknown-linux-gnu]\r\nlinker = \"aarch64-linux-gnu-gcc\"" >> /root/.cargo/config
-RUN echo "[target.arm-unknown-linux-gnueabihf]\r\nlinker = \"arm-linux-gnueabihf-gcc\"" >> /root/.cargo/config
+###############################################################################
+# Install Rust Toolchains
+###############################################################################
 
-ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ENV PATH=/usr/local/cargo/bin:$PATH \
+    CARGO_HOME=/usr/local/cargo \
+    RUSTUP_HOME=/etc/local/cargo/rustup
 
-# install rustup
+# install rustup in a globally accessible location
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
-    sh ./rustup-install.sh -y --default-toolchain 1.46.0-x86_64-unknown-linux-gnu && \
-    rm rustup-install.sh
+    umask 020 && sh ./rustup-install.sh -y --default-toolchain 1.46.0-x86_64-unknown-linux-gnu && \
+    rm rustup-install.sh && \
+                            \
+    # Install rustfmt / cargo fmt for testing
+    rustup component add rustfmt
+
+# install the cargo license checker
+RUN cargo install cargo-license
 
 # Install AARCH64 Rust
-RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
+RUN rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
-RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
+RUN rustup target add arm-unknown-linux-gnueabihf
 
-# Install rustfmt / cargo fmt for testing
-RUN rustup component add rustfmt
+COPY cargo_config /.cargo/config
 
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
