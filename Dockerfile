@@ -1,4 +1,4 @@
-FROM starlabio/ubuntu-base:1.6
+FROM starlabio/ubuntu-base:1.7
 MAINTAINER Pete Dietl <pete.dietl@starlab.io>
 
 # setup linkers for Cargo
@@ -88,7 +88,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
 # Install behave and hamcrest for testing
-RUN pip install behave pyhamcrest requests
+RUN pip3 install behave pyhamcrest requests
 
 # We need to install TPM 2.0 tools
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
