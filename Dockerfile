@@ -1,25 +1,31 @@
-FROM starlabio/ubuntu-base:1.6
+FROM starlabio/ubuntu-base:1.7
 MAINTAINER Pete Dietl <pete.dietl@starlab.io>
 
-# setup linkers for Cargo
-RUN mkdir -p /root/.cargo/
-RUN echo "[target.aarch64-unknown-linux-gnu]\r\nlinker = \"aarch64-linux-gnu-gcc\"" >> /root/.cargo/config
-RUN echo "[target.arm-unknown-linux-gnueabihf]\r\nlinker = \"arm-linux-gnueabihf-gcc\"" >> /root/.cargo/config
+###############################################################################
+# Install Rust Toolchains
+###############################################################################
 
-ENV PATH "/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ENV PATH=/usr/local/cargo/bin:$PATH \
+    CARGO_HOME=/usr/local/cargo \
+    RUSTUP_HOME=/etc/local/cargo/rustup
 
-# install rustup
+# install rustup in a globally accessible location
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
-    sh ./rustup-install.sh -y --default-toolchain 1.46.0-x86_64-unknown-linux-gnu && \
-    rm rustup-install.sh
+    umask 020 && sh ./rustup-install.sh -y --default-toolchain 1.46.0-x86_64-unknown-linux-gnu && \
+    rm rustup-install.sh && \
+                            \
+    # Install rustfmt / cargo fmt for testing
+    rustup component add rustfmt
+
+# install the cargo license checker
+RUN cargo install cargo-license
 
 # Install AARCH64 Rust
-RUN /root/.cargo/bin/rustup target add aarch64-unknown-linux-gnu
+RUN rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
-RUN /root/.cargo/bin/rustup target add arm-unknown-linux-gnueabihf
+RUN rustup target add arm-unknown-linux-gnueabihf
 
-# Install rustfmt / cargo fmt for testing
-RUN rustup component add rustfmt
+COPY cargo_config /.cargo/config
 
 # setup fetching arm packages
 RUN dpkg --add-architecture arm64 && dpkg --add-architecture armhf
@@ -46,6 +52,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         cmake \
         cpio \
         dos2unix \
+        execstack \
         gawk \
         gcc-aarch64-linux-gnu \
         gcc-arm-linux-gnueabihf \
@@ -88,7 +95,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
 # Install behave and hamcrest for testing
-RUN pip install behave pyhamcrest requests
+RUN pip3 install behave pyhamcrest requests
 
 # We need to install TPM 2.0 tools
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
