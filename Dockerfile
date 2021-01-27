@@ -94,6 +94,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists* /tmp/* /var/tmp/*
 
+RUN update-alternatives --install  /usr/bin/python python /usr/bin/python2.7 1000
+
 # Install behave and hamcrest for testing
 RUN pip3 install behave pyhamcrest requests
 
