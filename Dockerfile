@@ -52,6 +52,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         cmake \
         cpio \
         dos2unix \
+        execstack \
         gawk \
         gcc-aarch64-linux-gnu \
         gcc-arm-linux-gnueabihf \
