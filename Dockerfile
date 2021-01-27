@@ -111,7 +111,7 @@ RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-ts
 SHELL ["/bin/bash", "-c"]
 
 ARG SHELLCHECK_VER=v0.7.0
-RUN wget -nv https://storage.googleapis.com/shellcheck/shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
+RUN wget -nv https://github.com/koalaman/shellcheck/releases/download/v0.7.0/shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
     tar xf shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
     install shellcheck-${SHELLCHECK_VER}/shellcheck /usr/local/bin && \
     rm shellcheck-${SHELLCHECK_VER}.linux.x86_64.tar.xz && \
