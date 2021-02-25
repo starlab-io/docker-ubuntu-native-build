@@ -56,6 +56,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         gawk \
         gcc-aarch64-linux-gnu \
         gcc-arm-linux-gnueabihf \
+        gcovr \
         gettext \
         gnu-efi \
         lcov \
