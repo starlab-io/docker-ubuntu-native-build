@@ -61,6 +61,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         gnu-efi \
         lcov \
         libaio-dev \
+        libasan6 \
         libbsd-dev \
         libbz2-dev \
         libcmocka-dev \
