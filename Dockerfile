@@ -101,7 +101,7 @@ RUN update-alternatives --install  /usr/bin/python python /usr/bin/python2.7 100
 RUN pip3 install behave pyhamcrest requests
 
 # Install gitlab python module
-RUN pip3 install gitlab
+RUN pip3 install python-gitlab
 
 # We need to install TPM 2.0 tools
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
