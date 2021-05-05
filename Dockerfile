@@ -25,6 +25,10 @@ RUN rustup target add aarch64-unknown-linux-gnu
 # Install 32-bit ARM Rust
 RUN rustup target add arm-unknown-linux-gnueabihf
 
+# Install code coverage tools
+RUN rustup component add llvm-tools-preview && \
+    cargo install grcov
+
 COPY cargo_config /.cargo/config
 
 # setup fetching arm packages
