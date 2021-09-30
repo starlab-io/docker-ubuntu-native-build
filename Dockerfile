@@ -27,7 +27,7 @@ RUN rustup target add arm-unknown-linux-gnueabihf
 
 # Install code coverage tools
 RUN rustup component add llvm-tools-preview && \
-    cargo install grcov
+    cargo install grcov --version 0.8.0
 
 COPY cargo_config /.cargo/config
 
