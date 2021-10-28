@@ -11,7 +11,7 @@ ENV PATH=/usr/local/cargo/bin:$PATH \
 
 # install rustup in a globally accessible location
 RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
-    umask 020 && sh ./rustup-install.sh -y --default-toolchain 1.46.0-x86_64-unknown-linux-gnu && \
+    umask 020 && sh ./rustup-install.sh -y --default-toolchain 1.56.0-x86_64-unknown-linux-gnu && \
     rm rustup-install.sh && \
                             \
     # Install rustfmt / cargo fmt for testing
