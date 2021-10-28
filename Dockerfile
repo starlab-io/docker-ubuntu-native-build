@@ -15,7 +15,8 @@ RUN curl https://sh.rustup.rs -sSf > rustup-install.sh && \
     rm rustup-install.sh && \
                             \
     # Install rustfmt / cargo fmt for testing
-    rustup component add rustfmt
+    rustup component add rustfmt  && \
+    rustup component add clippy-preview
 
 # install the cargo license checker
 RUN cargo install cargo-license
