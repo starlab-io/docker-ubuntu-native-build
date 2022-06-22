@@ -107,6 +107,11 @@ RUN pip3 install behave pyhamcrest requests
 # Install gitlab python module
 RUN pip3 install python-gitlab
 
+# Install binary for reformating Gherkin feature files.
+RUN wget https://github.com/antham/ghokin/releases/download/v1.6.1/ghokin_linux_amd64 && \
+    chmod +x ghokin_linux_amd64 && \
+    mv ghokin_linux_amd64 /usr/bin/ghokin
+
 # We need to install TPM 2.0 tools
 RUN curl -sSfL https://github.com/01org/tpm2-tss/releases/download/1.2.0/tpm2-tss-1.2.0.tar.gz > tpm2-tss-1.2.0.tar.gz && \
     tar -zxf tpm2-tss-1.2.0.tar.gz && \
